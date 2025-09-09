@@ -10,13 +10,107 @@ env:
   CARGO_TERM_COLOR: always
 
 jobs:
-  build:
+  test:
+    name: test on ${{ matrix.rust }}
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        rust: [stable, beta, nightly]
 
+    steps:
+    - uses: actions/checkout@v4
+    - uses: dtolnay/rust-toolchain@master
+      with:
+        toolchain: ${{ matrix.rust }}
+    - name: build library
+      run: cargo build --verbose
+    - name: run tests
+      run: cargo test --verbose --lib
+    - name: run tests in release mode
+      run: cargo test --verbose --lib --release
+
+  no_std:
+    name: no_std compatibility
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v4
-    - name: build
-      run: cargo build --verbose
-    - name: run tests
-      run: cargo test --verbose
+    - uses: dtolnay/rust-toolchain@stable
+    - name: install embedded targets
+      run: |
+        rustup target add thumbv7em-none-eabihf
+        rustup target add thumbv6m-none-eabi
+        rustup target add thumbv7m-none-eabi
+        rustup target add thumbv8m.main-none-eabi
+    - name: build for cortex-m4f
+      run: cargo build --target thumbv7em-none-eabihf --verbose
+    - name: build for cortex-m0
+      run: cargo build --target thumbv6m-none-eabi --verbose
+    - name: build for cortex-m3
+      run: cargo build --target thumbv7m-none-eabi --verbose
+    - name: build for cortex-m33
+      run: cargo build --target thumbv8m.main-none-eabi --verbose
+    - name: build embedded example for cortex-m4f
+      run: cargo build --example embedded_test --target thumbv7em-none-eabihf --verbose
+    - name: build embedded example for cortex-m0
+      run: cargo build --example embedded_test --target thumbv6m-none-eabi --verbose
+    - name: build asm test example
+      run: cargo build --example asm_test --verbose
+    - name: build all targets in release mode
+      run: |
+        cargo build --target thumbv7em-none-eabihf --release --verbose
+        cargo build --target thumbv6m-none-eabi --release --verbose
+        cargo build --example embedded_test --target thumbv7em-none-eabihf --release --verbose
+
+  clippy:
+    name: clippy
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - uses: dtolnay/rust-toolchain@stable
+      with:
+        components: clippy
+    - name: run clippy on library
+      run: cargo clippy --lib -- -D warnings
+    - name: run clippy on asm test example
+      run: cargo clippy --example asm_test -- -D warnings
+
+  fmt:
+    name: rustfmt
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - uses: dtolnay/rust-toolchain@stable
+      with:
+        components: rustfmt
+    - name: check formatting
+      run: cargo fmt --all -- --check
+
+  docs:
+    name: docs
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - uses: dtolnay/rust-toolchain@stable
+    - name: build docs
+      run: cargo doc --no-deps --verbose
+
+  dependencies:
+    name: check dependencies
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - uses: dtolnay/rust-toolchain@stable
+    - name: verify zero dependencies
+      run: |
+        deps=$(cargo tree --depth 0 | grep -v "^endianness" | wc -l)
+        if [ "$deps" -ne 0 ]; then
+          echo "error: library should have zero dependencies"
+          cargo tree
+          exit 1
+        fi
+        echo "verified: library has zero dependencies"
