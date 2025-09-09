@@ -172,7 +172,7 @@ macro_rules! impl_endianness_signed {
     };
 }
 
-// Helper trait to map signed types to unsigned
+// helper trait to map signed types to unsigned
 trait ToUnsigned {
     type Unsigned;
 }
@@ -213,7 +213,7 @@ mod tests {
         assert_eq!(0x1234u16.swap_bytes(), 0x3412);
         assert_eq!(0x12345678u32.swap_bytes(), 0x78563412);
 
-        // Let's calculate the correct u64 swap
+        // calculate the correct u64 swap
         let original = 0x123456789abcdef0u64;
         let expected = 0xf0debc9a78563412u64;
         assert_eq!(original.swap_bytes(), expected);
@@ -223,17 +223,17 @@ mod tests {
     fn test_endianness_conversions_u16() {
         let value = 0x1234u16;
 
-        // Test round-trip conversions
+        // test round-trip conversions
         assert_eq!(value.host_to_big_endian().big_endian_to_host(), value);
         assert_eq!(value.host_to_little_endian().little_endian_to_host(), value);
 
-        // Test that big and little endian representations are swapped
+        // test that big and little endian representations are swapped
         assert_eq!(
             value.host_to_big_endian(),
             value.host_to_little_endian().swap_bytes()
         );
 
-        // Test specific behavior based on host endianness
+        // test specific behavior based on host endianness
         if cfg!(target_endian = "little") {
             assert_eq!(value.host_to_big_endian(), value.swap_bytes());
             assert_eq!(value.host_to_little_endian(), value);
@@ -247,17 +247,17 @@ mod tests {
     fn test_endianness_conversions_u32() {
         let value = 0x12345678u32;
 
-        // Test round-trip conversions
+        // test round-trip conversions
         assert_eq!(value.host_to_big_endian().big_endian_to_host(), value);
         assert_eq!(value.host_to_little_endian().little_endian_to_host(), value);
 
-        // Test that big and little endian representations are swapped
+        // test that big and little endian representations are swapped
         assert_eq!(
             value.host_to_big_endian(),
             value.host_to_little_endian().swap_bytes()
         );
 
-        // Test specific behavior based on host endianness
+        // test specific behavior based on host endianness
         if cfg!(target_endian = "little") {
             assert_eq!(value.host_to_big_endian(), value.swap_bytes());
             assert_eq!(value.host_to_little_endian(), value);
@@ -271,17 +271,17 @@ mod tests {
     fn test_endianness_conversions_u64() {
         let value = 0x123456789abcdef0u64;
 
-        // Test round-trip conversions
+        // test round-trip conversions
         assert_eq!(value.host_to_big_endian().big_endian_to_host(), value);
         assert_eq!(value.host_to_little_endian().little_endian_to_host(), value);
 
-        // Test that big and little endian representations are swapped
+        // test that big and little endian representations are swapped
         assert_eq!(
             value.host_to_big_endian(),
             value.host_to_little_endian().swap_bytes()
         );
 
-        // Test specific behavior based on host endianness
+        // test specific behavior based on host endianness
         if cfg!(target_endian = "little") {
             assert_eq!(value.host_to_big_endian(), value.swap_bytes());
             assert_eq!(value.host_to_little_endian(), value);
@@ -307,7 +307,7 @@ mod tests {
         let value_i32 = 0x12345678i32;
         let value_i64 = 0x123456789abcdef0i64;
 
-        // Test round-trip conversions for signed integers
+        // test round-trip conversions for signed integers
         assert_eq!(
             value_i16.host_to_big_endian().big_endian_to_host(),
             value_i16
@@ -341,7 +341,7 @@ mod tests {
         let value_u128 = 0x123456789abcdef0fedcba9876543210u128;
         let value_i128 = 0x123456789abcdef0fedcba9876543210i128;
 
-        // Test round-trip conversions for 128-bit integers
+        // test round-trip conversions for 128-bit integers
         assert_eq!(
             value_u128.host_to_big_endian().big_endian_to_host(),
             value_u128
@@ -360,7 +360,7 @@ mod tests {
             value_i128
         );
 
-        // Test that big and little endian representations are swapped
+        // test that big and little endian representations are swapped
         assert_eq!(
             value_u128.host_to_big_endian(),
             value_u128.host_to_little_endian().swap_bytes()
@@ -372,7 +372,7 @@ mod tests {
         let value_u8 = 0x42u8;
         let value_i8 = 0x42i8;
 
-        // Single-byte integers should always return the same value
+        // single-byte integers should always return the same value
         assert_eq!(value_u8.host_to_big_endian(), value_u8);
         assert_eq!(value_u8.host_to_little_endian(), value_u8);
         assert_eq!(value_u8.big_endian_to_host(), value_u8);
