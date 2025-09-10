@@ -1,4 +1,4 @@
-use endianness::Endianness;
+use endbyte::Endianness;
 
 #[no_mangle]
 pub fn test_u16_conversion(val: u16) -> u16 {

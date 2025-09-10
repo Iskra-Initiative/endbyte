@@ -1,4 +1,4 @@
-# endianness
+# endbyte
 
 a no_std compatible rust library for handling byte order conversions between different endianness formats.
 
@@ -17,13 +17,13 @@ add this to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-endianness = "0.1.0"
+endbyte = "0.1.0"
 ```
 
 ### basic usage
 
 ```rust
-use endianness::Endianness;
+use endbyte::Endianness;
 
 let value = 0x1234u16;
 
@@ -46,7 +46,7 @@ this library is designed to work in no_std environments:
 ```rust,ignore
 #![no_std]
 
-use endianness::Endianness;
+use endbyte::Endianness;
 
 fn process_network_data(data: u32) -> u32 {
     // convert from network byte order (big endian) to host

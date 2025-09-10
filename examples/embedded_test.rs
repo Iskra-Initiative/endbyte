@@ -1,7 +1,7 @@
 #![no_std]
 #![no_main]
 
-use endianness::Endianness;
+use endbyte::Endianness;
 
 #[panic_handler]
 fn panic(_info: &core::panic::PanicInfo) -> ! {
@@ -11,7 +11,7 @@ fn panic(_info: &core::panic::PanicInfo) -> ! {
 
 #[no_mangle]
 pub extern "C" fn _start() -> ! {
-    // test our endianness library in a no_std environment
+    // test the endbyte library in a no_std environment
 
     // test unsigned integers
     let val_u8 = 0x42u8;

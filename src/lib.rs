@@ -31,7 +31,7 @@ fn get_local_endianness() -> EndiannessType {
 ///
 /// ```
 /// # extern crate std;
-/// use endianness::Endianness;
+/// use endbyte::Endianness;
 ///
 /// let value = 0x1234u16;
 /// let big_endian = value.host_to_big_endian();

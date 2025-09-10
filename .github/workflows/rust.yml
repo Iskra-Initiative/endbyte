@@ -111,7 +111,7 @@ jobs:
     - uses: dtolnay/rust-toolchain@stable
     - name: verify zero dependencies
       run: |
-        deps=$(cargo tree --depth 0 | grep -v "^endianness" | wc -l)
+        deps=$(cargo tree --depth 0 | grep -v "^endbyte" | wc -l)
         if [ "$deps" -ne 0 ]; then
           echo "error: library should have zero dependencies"
           cargo tree

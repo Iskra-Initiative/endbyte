@@ -1,11 +1,11 @@
 [package]
-name = "endianness"
+name = "endbyte"
 version = "0.1.0"
 authors = ["Ognyan Makaveev (Iskra Initiative) makogn@proton.me"]
 edition = "2021"
 license = "MIT"
 description = "A no_std compatible rust library for handling byte order conversions between different endianness formats."
-repository = "https://github.com/Iskra-Initiative/endianness"
+repository = "https://github.com/Iskra-Initiative/endbyte"
 readme = "readme.md"
 
 [dependencies]
