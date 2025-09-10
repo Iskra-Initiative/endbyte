@@ -5,6 +5,7 @@ use endianness::Endianness;
 
 #[panic_handler]
 fn panic(_info: &core::panic::PanicInfo) -> ! {
+    #[allow(clippy::empty_loop)]
     loop {}
 }
 
@@ -90,5 +91,6 @@ pub extern "C" fn _start() -> ! {
         val_i32
     );
 
+    #[allow(clippy::empty_loop)]
     loop {}
 }

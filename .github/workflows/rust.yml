@@ -51,16 +51,16 @@ jobs:
     - name: build for cortex-m33
       run: cargo build --target thumbv8m.main-none-eabi --verbose
     - name: build embedded example for cortex-m4f
-      run: cargo build --example embedded_test --target thumbv7em-none-eabihf --verbose
+      run: cargo build --example embedded_test --target thumbv7em-none-eabihf --features="embedded" --verbose
     - name: build embedded example for cortex-m0
-      run: cargo build --example embedded_test --target thumbv6m-none-eabi --verbose
+      run: cargo build --example embedded_test --target thumbv6m-none-eabi --features="embedded" --verbose
     - name: build asm test example
       run: cargo build --example asm_test --verbose
     - name: build all targets in release mode
       run: |
         cargo build --target thumbv7em-none-eabihf --release --verbose
         cargo build --target thumbv6m-none-eabi --release --verbose
-        cargo build --example embedded_test --target thumbv7em-none-eabihf --release --verbose
+        cargo build --example embedded_test --target thumbv7em-none-eabihf --features="embedded" --release --verbose
 
   clippy:
     name: clippy
@@ -71,10 +71,14 @@ jobs:
     - uses: dtolnay/rust-toolchain@stable
       with:
         components: clippy
+    - name: install embedded targets for clippy
+      run: rustup target add thumbv7em-none-eabihf
     - name: run clippy on library
       run: cargo clippy --lib -- -D warnings
     - name: run clippy on asm test example
       run: cargo clippy --example asm_test -- -D warnings
+    - name: run clippy on embedded test example
+      run: cargo clippy --example embedded_test --target thumbv7em-none-eabihf --features="embedded" -- -D warnings
 
   fmt:
     name: rustfmt
