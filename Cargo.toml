@@ -1,19 +1,24 @@
 [package]
 name = "endianness"
 version = "0.1.0"
+authors = ["Ognyan Makaveev (Iskra Initiative) makogn@proton.me"]
 edition = "2021"
+license = "MIT"
+description = "A no_std compatible rust library for handling byte order conversions between different endianness formats."
+repository = "https://github.com/Iskra-Initiative/endianness"
+readme = "readme.md"
 
 [dependencies]
 
-# Embedded test example - excluded from default test runs
+# embedded test example - excluded from default test runs
 [[example]]
 name = "embedded_test"
 required-features = ["embedded"]
 
-# Assembly test example
+# assembly test example
 [[example]]
 name = "asm_test"
 
 [features]
-# Feature flag for embedded examples
+# feature flag for embedded examples
 embedded = []
