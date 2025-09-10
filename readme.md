@@ -1,5 +1,11 @@
 # endbyte
 
+[![Crates.io](https://img.shields.io/crates/v/endbyte.svg)](https://crates.io/crates/endbyte)
+[![Documentation](https://docs.rs/endbyte/badge.svg)](https://docs.rs/endbyte)
+[![Build Status](https://github.com/Iskra-Initiative/endbyte/actions/workflows/rust.yml/badge.svg)](https://github.com/Iskra-Initiative/endbyte/actions)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![no_std](https://img.shields.io/badge/no__std-compatible-green.svg)](https://docs.rust-embedded.org/book/intro/no-std.html)
+
 a no_std compatible rust library for handling byte order conversions between different endianness formats.
 
 ## features
@@ -99,6 +105,21 @@ for embedded targets:
 cargo build --target thumbv7em-none-eabihf
 cargo build --target thumbv6m-none-eabi
 ```
+
+## releases
+
+this crate uses automated publishing to crates.io via github actions. to create a new release:
+
+1. update the version in `Cargo.toml`
+2. commit the changes: `git commit -am "bump version to x.y.z"`
+3. create and push a git tag: `git tag vx.y.z && git push origin vx.y.z`
+4. the github action will automatically run tests and publish to crates.io
+
+the automated workflow ensures that:
+- the git tag version matches the `Cargo.toml` version
+- all tests pass (including no_std compatibility tests)
+- code formatting and clippy checks pass
+- documentation builds successfully
 
 ## license
 

@@ -6,7 +6,11 @@ edition = "2021"
 license = "MIT"
 description = "A no_std compatible rust library for handling byte order conversions between different endianness formats."
 repository = "https://github.com/Iskra-Initiative/endbyte"
+homepage = "https://github.com/Iskra-Initiative/endbyte"
+documentation = "https://docs.rs/endbyte"
 readme = "readme.md"
+keywords = ["endian", "byte-order", "no-std", "embedded", "conversion"]
+categories = ["embedded", "no-std", "encoding"]
 
 [dependencies]
 

@@ -1,0 +1,64 @@
+name: publish
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  publish:
+    name: publish to crates.io
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - uses: dtolnay/rust-toolchain@stable
+    
+    - name: verify version matches tag
+      run: |
+        # extract version from tag (remove 'v' prefix)
+        TAG_VERSION=${GITHUB_REF#refs/tags/v}
+        echo "tag version: $TAG_VERSION"
+        
+        # extract version from cargo.toml
+        CARGO_VERSION=$(grep '^version = ' Cargo.toml | sed 's/version = "\(.*\)"/\1/')
+        echo "cargo version: $CARGO_VERSION"
+        
+        # compare versions
+        if [ "$TAG_VERSION" != "$CARGO_VERSION" ]; then
+          echo "error: tag version ($TAG_VERSION) does not match cargo.toml version ($CARGO_VERSION)"
+          exit 1
+        fi
+        echo "versions match: $TAG_VERSION"
+    
+    - name: run tests
+      run: |
+        cargo test --verbose --lib
+        cargo test --verbose --lib --release
+    
+    - name: verify no_std compatibility
+      run: |
+        rustup target add thumbv7em-none-eabihf
+        cargo build --target thumbv7em-none-eabihf --verbose
+    
+    - name: run clippy
+      run: |
+        rustup component add clippy
+        cargo clippy --lib -- -D warnings
+    
+    - name: check formatting
+      run: |
+        rustup component add rustfmt
+        cargo fmt --all -- --check
+    
+    - name: build docs
+      run: cargo doc --no-deps --verbose
+    
+    - name: publish to crates.io
+      run: cargo publish --token ${{ secrets.CARGO_REGISTRY_TOKEN }}
+      env:
+        CARGO_REGISTRY_TOKEN: ${{ secrets.CARGO_REGISTRY_TOKEN }}
