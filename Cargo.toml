@@ -5,6 +5,15 @@ edition = "2021"
 
 [dependencies]
 
+# Embedded test example - excluded from default test runs
 [[example]]
 name = "embedded_test"
-crate-type = ["bin"]
+required-features = ["embedded"]
+
+# Assembly test example
+[[example]]
+name = "asm_test"
+
+[features]
+# Feature flag for embedded examples
+embedded = []

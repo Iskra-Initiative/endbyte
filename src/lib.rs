@@ -30,6 +30,7 @@ fn get_local_endianness() -> EndiannessType {
 /// # examples
 ///
 /// ```
+/// # extern crate std;
 /// use endianness::Endianness;
 ///
 /// let value = 0x1234u16;

@@ -43,7 +43,7 @@ assert_eq!(from_little, value);
 
 this library is designed to work in no_std environments:
 
-```rust
+```rust,ignore
 #![no_std]
 
 use endianness::Endianness;

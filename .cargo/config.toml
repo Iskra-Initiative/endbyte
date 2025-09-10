@@ -1,0 +1,8 @@
+[build]
+target = "x86_64-unknown-linux-gnu"
+
+[target.thumbv6m-none-eabi]
+rustflags = ["-C", "panic=abort"]
+
+[target.thumbv7em-none-eabihf]
+rustflags = ["-C", "panic=abort"]
