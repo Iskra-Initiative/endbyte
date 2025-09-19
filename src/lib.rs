@@ -55,7 +55,7 @@ pub trait Endianness {
     fn little_endian_to_host(self) -> Self;
 }
 
-// Macro to implement Endianness for unsigned integers
+// impl Endianness for unsigned integers
 macro_rules! impl_endianness_unsigned {
     ($($t:ty),*) => {
         $(
@@ -92,7 +92,7 @@ macro_rules! impl_endianness_unsigned {
     };
 }
 
-// Special implementation for single-byte types (no byte swapping needed)
+// no byte swapping needed for single-byte types
 impl Endianness for u8 {
     fn host_to_big_endian(self) -> Self {
         self
@@ -111,6 +111,7 @@ impl Endianness for u8 {
     }
 }
 
+// no byte swapping needed for single-byte types
 impl Endianness for i8 {
     fn host_to_big_endian(self) -> Self {
         self
@@ -129,10 +130,10 @@ impl Endianness for i8 {
     }
 }
 
-// Implement for multi-byte unsigned integers
+// impl Endianness for multi-byte unsigned integers
 impl_endianness_unsigned!(u16, u32, u64, u128);
 
-// Macro to implement Endianness for signed integers
+// impl Endianness for signed integers
 macro_rules! impl_endianness_signed {
     ($($t:ty),*) => {
         $(
@@ -191,6 +192,7 @@ impl ToUnsigned for i128 {
     type Unsigned = u128;
 }
 
+// impl Endianness for multi-byte signed integers
 impl_endianness_signed!(i16, i32, i64, i128);
 
 #[cfg(test)]
