@@ -1,10 +1,12 @@
 # endbyte
 
-[![Crates.io](https://img.shields.io/crates/v/endbyte.svg)](https://crates.io/crates/endbyte)
-[![Documentation](https://docs.rs/endbyte/badge.svg)](https://docs.rs/endbyte)
-[![Build Status](https://github.com/Iskra-Initiative/endbyte/actions/workflows/rust.yml/badge.svg)](https://github.com/Iskra-Initiative/endbyte/actions)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![crates.io](https://img.shields.io/crates/v/endbyte.svg)](https://crates.io/crates/endbyte)
+[![docs](https://docs.rs/endbyte/badge.svg)](https://docs.rs/endbyte)
+[![build](https://github.com/Iskra-Initiative/endbyte/actions/workflows/rust.yml/badge.svg)](https://github.com/Iskra-Initiative/endbyte/actions)
+[![license: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![no_std](https://img.shields.io/badge/no__std-compatible-green.svg)](https://docs.rust-embedded.org/book/intro/no-std.html)
+[![downloads](https://img.shields.io/crates/d/endbyte.svg)](https://crates.io/crates/endbyte)
+
 
 a `no_std` compatible crate for handling byte order conversions between different endianness formats.
 
